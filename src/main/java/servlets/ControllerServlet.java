@@ -11,11 +11,11 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet("/controller")
 public class ControllerServlet extends HttpServlet {
-    private ResultTable resultTable;
+    // private ResultTable resultTable;
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            request.setAttribute("resultTable", resultTable);
+            request.setAttribute("resultTable", "resultTable");
             getServletContext().getRequestDispatcher("/checkArea").forward(request, response);
         } catch (Exception e) {
             getServletContext().setAttribute("error", e.getMessage());
