@@ -1,0 +1,23 @@
+header {
+    border-width: 200px;
+    box-shadow: 2.5px 5px 5px rgba(1, 1, 1, 0.25);
+
+    font: sans-serif;
+    font-size: 35px;
+    text-decoration: wavy;
+    text-align: center;
+    text-shadow: 0.5px 0.5px 20px aquamarine;
+}
+
+button.green {
+    background-color: rgb(145, 255, 112);
+  }
+
+form {
+    background-color: rgb(233, 235, 238);
+}
+
+th {
+    background-color: rgb(233, 235, 238);
+    font-weight: bold;
+}
