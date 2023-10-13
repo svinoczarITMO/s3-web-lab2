@@ -2,9 +2,9 @@ const ERROR_DELAY = 5000;
 const TABLE = $("#result-table");
 let result_table_element_id = 1;
 let result_table = $("#result-table");
-let current_button_id;
-let x_values = [];
-let R_values = [];
+let current_button;
+let x_button;
+let R_button;
 
 function redirectToMain() {
     window.location.href = "index.jsp";
@@ -18,16 +18,12 @@ function areaCheckGetRequest(data, redirectToResult) {
         async: false,
         data: data,
         success: function (responseData) {
-            console.log(`responseData: ${responseData}`);
-            console.log(`response.type: ${responseData.type}`);
-            console.log(`response.x: ${responseData.x}`);
-            console.log(`response.y: ${responseData.y}`);
-            console.log(`response.R: ${responseData.R}`);
-            console.log(`response.collision: ${responseData.collision}`);
-            console.log(`response.execTime: ${responseData.executionTime}`);
-            console.log(`response.time: ${responseData.time}`);
-            localStorage.setItem(
-                localStorage.length + 1,
+            console.log(
+                `response.x: ${responseData.x}, response.y: ${responseData.y}, response.R: ${responseData.R},\n` +
+                    `response.collision: ${responseData.collision}, response.execTime: ${responseData.executionTime}, response.time: ${responseData.time}`
+            );
+            sessionStorage.setItem(
+                sessionStorage.length + 1,
                 JSON.stringify({
                     x: responseData.x,
                     y: responseData.y,
@@ -90,17 +86,6 @@ function validate(x, y, R) {
     return true;
 }
 
-function changeColorSelect(buttonId) {
-    if (current_button_id) {
-        var previousButton = $(`#${current_button_id}`);
-        previousButton.removeClass("green");
-    }
-
-    var button = $(`#${buttonId}`);
-    button.addClass("green");
-    current_button_id = buttonId;
-}
-
 function setColorClick(elementId, className) {
     let element = $(`#${elementId}`);
     element.addClass(className);
@@ -109,6 +94,24 @@ function setColorClick(elementId, className) {
 function removeColorClick(elementId, className) {
     let element = $(`#${elementId}`);
     element.removeClass(className);
+}
+
+function changeColorSelect(buttonId) {
+    let button = $(`#${buttonId}`);
+    console.log(`current_button_id: ${current_button}`);
+    if (current_button) {
+        if (x_button && button.attr(`class`) === "x_val") {
+            x_button.removeClass("green");
+            x_button = button;
+        }
+        if (R_button && button.attr(`class`) === "R_val") {
+            R_button.removeClass("green");
+            R_button = button;
+        }
+    }
+    // console.log(`button class: ${button.attr(`class`)}`);
+    button.addClass("green");
+    current_button = button;
 }
 
 function showError(msg, delay) {
@@ -120,11 +123,11 @@ function showError(msg, delay) {
 }
 
 $(document).ready(function () {
-    if (localStorage.length > 0) {
-        console.log(localStorage[0]);
-        Object.keys(localStorage).forEach((key) => {
+    if (sessionStorage.length > 0) {
+        console.log(sessionStorage[0]);
+        Object.keys(sessionStorage).forEach((key) => {
             try {
-                const result = JSON.parse(localStorage.getItem(key));
+                const result = JSON.parse(sessionStorage.getItem(key));
                 const content = `<tr>
                     <td>${result.x}</td>
                     <td>${result.y}</td>
@@ -150,7 +153,7 @@ $(document).ready(function () {
     }
 
     $("#clear-table").click(function () {
-        localStorage.clear();
+        sessionStorage.clear();
         const content = `<th width="16.6%">X</th>
                         <th width="16.6%">Y</th>
                         <th width="16.6%">R</th>
@@ -165,20 +168,20 @@ $(document).ready(function () {
     });
 
     $(".x_val").click(function (event) {
-        x_values.push($(this).val());
+        x_button = $(this);
         changeColorSelect($(this).attr("id"));
     });
 
     $(".R_val").click(function (event) {
-        R_values.push($(this).val());
+        R_button = $(this);
         changeColorSelect($(this).attr("id"));
     });
 
     $("#input-form").submit(function (event) {
         event.preventDefault();
-        const x = x_values[x_values.length - 1];
+        const x = x_button.val();
         const y = $("input[name='y_field']").val();
-        const R = R_values[R_values.length - 1];
+        const R = R_button.val();
 
         console.log(x, y, R);
 

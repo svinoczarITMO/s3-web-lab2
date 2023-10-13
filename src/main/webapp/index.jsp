@@ -18,7 +18,7 @@
 
 <body>
     <header>
-        Babushkin Alexander Mikhailovich P3221 var: 3101
+        Babushkin Alexander Mikhailovich P3221 var: 2145
         <button id="clear-table" style="position: fixed; top: 5px; right: 10px; height: 40px;" >clear</button>
     </header>
 
