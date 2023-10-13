@@ -25,29 +25,20 @@
     <table width="100%">
         <tr>
             <th with="100%">
-                <form id="form">
+                <form id="input-form">
 
                     <br>
 
                     <label for="x_value">X: </label>
-                    <input id="buttonX1" class="x_val" type="button" onclick="changeColor('buttonX1')" name="x_value"
-                        value="-4">-4
-                    <input id="buttonX2" class="x_val" type="button" onclick="changeColor('buttonX2')" name="x_value"
-                        value="-3">-3
-                    <input id="buttonX3" class="x_val" type="button" onclick="changeColor('buttonX3')" name="x_value"
-                        value="-2">-2
-                    <input id="buttonX4" class="x_val" type="button" onclick="changeColor('buttonX4')" name="x_value"
-                        value="-1">-1
-                    <input id="buttonX5" class="x_val" type="button" onclick="changeColor('buttonX5')" name="x_value"
-                        value="0">0
-                    <input id="buttonX6" class="x_val" type="button" onclick="changeColor('buttonX6')" name="x_value"
-                        value="1">1
-                    <input id="buttonX7" class="x_val" type="button" onclick="changeColor('buttonX7')" name="x_value"
-                        value="2">2
-                    <input id="buttonX8" class="x_val" type="button" onclick="changeColor('buttonX8')" name="x_value"
-                        value="3">3
-                    <input id="buttonX9" class="x_val" type="button" onclick="changeColor('buttonX9')" name="x_value"
-                        value="4">4
+                    <button id="buttonX1" class="x_val" type="button" onclick="changeColorSelect('buttonX1')" name="x_value" value="-5">-5</button>
+                    <button id="buttonX2" class="x_val" type="button" onclick="changeColorSelect('buttonX2')" name="x_value" value="-4">-4</button>
+                    <button id="buttonX3" class="x_val" type="button" onclick="changeColorSelect('buttonX3')" name="x_value" value="-3">-3</button>
+                    <button id="buttonX4" class="x_val" type="button" onclick="changeColorSelect('buttonX4')" name="x_value" value="-2">-2</button>
+                    <button id="buttonX5" class="x_val" type="button" onclick="changeColorSelect('buttonX5')" name="x_value" value="-1">-1</button>
+                    <button id="buttonX6" class="x_val" type="button" onclick="changeColorSelect('buttonX6')" name="x_value" value="0">0</button>
+                    <button id="buttonX7" class="x_val" type="button" onclick="changeColorSelect('buttonX7')" name="x_value" value="1">1</button>
+                    <button id="buttonX8" class="x_val" type="button" onclick="changeColorSelect('buttonX8')" name="x_value" value="2">2</button>
+                    <button id="buttonX9" class="x_val" type="button" onclick="changeColorSelect('buttonX9')" name="x_value" value="3">3</button>
 
                     <br>
                     <br>
@@ -59,16 +50,11 @@
                     <br>
 
                     <label for="R_value">R: </label>
-                    <button id="buttonR1" class="R_val" type="button" onclick="changeColor('buttonR1')" name="R_value"
-                        value="1">1</button>
-                    <button id="buttonR2" class="R_val" type="button" onclick="changeColor('buttonR2')" name="R_value"
-                        value="1.5">1.5</button>
-                    <button id="buttonR3" class="R_val" type="button" onclick="changeColor('buttonR3')" name="R_value"
-                        value="2">2</button>
-                    <button id="buttonR4" class="R_val" type="button" onclick="changeColor('buttonR4')" name="R_value"
-                        value="2.5">2.5</button>
-                    <button id="buttonR5" class="R_val" type="button" onclick="changeColor('buttonR5')" name="R_value"
-                        value="3">3</button>
+                    <button id="buttonR1" class="R_val" type="button" onclick="changeColorSelect('buttonR1')" name="R_value" value="1">1</button>
+                    <button id="buttonR2" class="R_val" type="button" onclick="changeColorSelect('buttonR2')" name="R_value" value="1.5">1.5</button>
+                    <button id="buttonR3" class="R_val" type="button" onclick="changeColorSelect('buttonR3')" name="R_value" value="2">2</button>
+                    <button id="buttonR4" class="R_val" type="button" onclick="changeColorSelect('buttonR4')" name="R_value" value="2.5">2.5</button>
+                    <button id="buttonR5" class="R_val" type="button" onclick="changeColorSelect('buttonR5')" name="R_value" value="3">3</button>
 
                     <br>
                     <br>

@@ -11,25 +11,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <%-- <script src="js/script.js" async defer></script> --%>
+        <script src="js/script.js" async defer></script>
     </head>
-     <body>
+    <body id="error-page">
         <header>
             Babushkin Alexander Mikhailovich P3221 var: 2145
         </header>
-        <div id="result-div">
-        Hit:${resultRow.isHit()}
-        <br>
-        X:${resultRow.getX()}
-        <br>
-        Y:${resultRow.getY()}
-        <br>
-        R:${resultRow.getR()}
-        <br>
-        Time:${resultRow.getFormattedTime()}
-        <br>
-        Execution time:${resultRow.getExecutionTime()}
-        <br>
+
+        <div id="error-div">
+        <h1>
+        Error: ${error}
+        </h1>
         <button class="return-buttons" onclick="redirectToMain()">Return</button>
         </div>
     </body>

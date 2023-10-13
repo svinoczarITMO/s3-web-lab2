@@ -15,7 +15,6 @@ public class ControllerServlet extends HttpServlet {
 
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
-            request.setAttribute("resultTable", "resultTable");
             getServletContext().getRequestDispatcher("/checkArea").forward(request, response);
         } catch (Exception e) {
             getServletContext().setAttribute("error", e.getMessage());
