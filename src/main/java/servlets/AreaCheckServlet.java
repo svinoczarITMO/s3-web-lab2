@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import servlets.CollisionData;
+import data.CollisionData;
 
 @WebServlet("/checkArea")
 public class AreaCheckServlet extends HttpServlet {

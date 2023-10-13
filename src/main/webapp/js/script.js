@@ -1,34 +1,10 @@
 const ERROR_DELAY = 5000;
 const TABLE = $("#result-table");
-
-let currentButtonId;
-
-if (localStorage.length > 0) {
-    console.log(localStorage[0])
-    Object.keys(localStorage).forEach((key) => {
-        try {
-            const result = JSON.parse(localStorage.getItem(key));
-            const content = `<tr>
-                <td>${result.x}</td>
-                <td>${result.y}</td>
-                <td>${result.R}</td>
-                <td>${result.collision}</td>
-                <td>${result.execTime}</td>
-                <td>${result.time}</td>
-                </tr>`;
-            TABLE.innerHTML += content;
-        } catch (error) {
-            console.error(`Ошибка разбора JSON для ключа ${key}`);
-        }
-    });
-} else {
-    TABLE.innerHTML = `<th width="16.6%">X</th>
-                    <th width="16.6%">Y</th>
-                    <th width="16.6%">R</th>
-                    <th width="16.6%">res</th>
-                    <th width="16.6%">execution time</th>
-                    <th width="16.6%">time</th>`;
-}
+let result_table_element_id = 1;
+let result_table = $("#result-table");
+let current_button_id;
+let x_values = [];
+let R_values = [];
 
 function redirectToMain() {
     window.location.href = "index.jsp";
@@ -42,22 +18,25 @@ function areaCheckGetRequest(data, redirectToResult) {
         async: false,
         data: data,
         success: function (responseData) {
-            console.log(`responseData: ${responseData}`)
-            console.log(`response.type: ${responseData.type}`)
-            console.log(`response.x: ${responseData.x}`)
-            console.log(`response.y: ${responseData.y}`)
-            console.log(`response.R: ${responseData.R}`)
-            console.log(`response.collision: ${responseData.collision}`)
-            console.log(`response.execTime: ${responseData.executionTime}`)
-            console.log(`response.time: ${responseData.time}`)
-            localStorage.setItem(localStorage.length + 1, JSON.stringify({
-                x: responseData.x,
-                y: responseData.y,
-                R: responseData.R,
-                collision: responseData.collision,
-                time: responseData.time,
-                execTime: responseData.executionTime,
-            }));
+            console.log(`responseData: ${responseData}`);
+            console.log(`response.type: ${responseData.type}`);
+            console.log(`response.x: ${responseData.x}`);
+            console.log(`response.y: ${responseData.y}`);
+            console.log(`response.R: ${responseData.R}`);
+            console.log(`response.collision: ${responseData.collision}`);
+            console.log(`response.execTime: ${responseData.executionTime}`);
+            console.log(`response.time: ${responseData.time}`);
+            localStorage.setItem(
+                localStorage.length + 1,
+                JSON.stringify({
+                    x: responseData.x,
+                    y: responseData.y,
+                    R: responseData.R,
+                    collision: responseData.collision,
+                    time: responseData.time,
+                    execTime: responseData.executionTime,
+                })
+            );
             const content = `<tr>
                      <td>${responseData.x}</td>
                      <td>${responseData.y}</td>
@@ -66,7 +45,8 @@ function areaCheckGetRequest(data, redirectToResult) {
                      <td>${responseData.executionTime}s</td>
                      <td>${responseData.time}</td>
                      </tr>`;
-            TABLE.innerHTML += content;
+            result_table.append(content);
+            result_table_element_id += 1;
             if (redirectToResult) {
                 window.location.replace("./results.jsp");
             } else {
@@ -111,23 +91,23 @@ function validate(x, y, R) {
 }
 
 function changeColorSelect(buttonId) {
-    if (currentButtonId) {
-        var previousButton = $(`#${currentButtonId}`);
+    if (current_button_id) {
+        var previousButton = $(`#${current_button_id}`);
         previousButton.removeClass("green");
     }
 
     var button = $(`#${buttonId}`);
     button.addClass("green");
-    currentButtonId = buttonId;
+    current_button_id = buttonId;
 }
 
 function setColorClick(elementId, className) {
-    var element = $(`#${elementId}`);
+    let element = $(`#${elementId}`);
     element.addClass(className);
 }
 
 function removeColorClick(elementId, className) {
-    var element = $(`#${elementId}`);
+    let element = $(`#${elementId}`);
     element.removeClass(className);
 }
 
@@ -140,29 +120,55 @@ function showError(msg, delay) {
 }
 
 $(document).ready(function () {
-    let clicked_points = [];
+    if (localStorage.length > 0) {
+        console.log(localStorage[0]);
+        Object.keys(localStorage).forEach((key) => {
+            try {
+                const result = JSON.parse(localStorage.getItem(key));
+                const content = `<tr>
+                    <td>${result.x}</td>
+                    <td>${result.y}</td>
+                    <td>${result.R}</td>
+                    <td>${result.collision}</td>
+                    <td>${result.execTime}</td>
+                    <td>${result.time}</td>
+                    </tr>`;
+                result_table.append(content);
+            } catch (error) {
+                console.error(`Ошибка разбора JSON для ключа ${key}`);
+            }
+        });
+    } else {
+        const content = `<th width="16.6%">X</th>
+                        <th width="16.6%">Y</th>
+                        <th width="16.6%">R</th>
+                        <th width="16.6%">res</th>
+                        <th width="16.6%">execution time</th>
+                        <th width="16.6%">time</th>`;
+        result_table.html(content);
+        result_table_element_id += 1;
+    }
 
-    $("#clear-table").on("click", function () {
+    $("#clear-table").click(function () {
         localStorage.clear();
-        TABLE.innerHTML = `<th width="16.6%">X</th>
-                       <th width="16.6%">Y</th>
-                       <th width="16.6%">R</th>
-                       <th width="16.6%">res</th>
-                       <th width="16.6%">execution time</th>
-                       <th width="16.6%">time</th>`;
+        const content = `<th width="16.6%">X</th>
+                        <th width="16.6%">Y</th>
+                        <th width="16.6%">R</th>
+                        <th width="16.6%">res</th>
+                        <th width="16.6%">execution time</th>
+                        <th width="16.6%">time</th>`;
+        result_table.html(content);
         setColorClick("clear-table", "green");
         setTimeout(function () {
             removeColorClick("clear-table", "green");
         }, 250);
     });
 
-    let x_values = [];
     $(".x_val").click(function (event) {
         x_values.push($(this).val());
         changeColorSelect($(this).attr("id"));
     });
 
-    let R_values = [];
     $(".R_val").click(function (event) {
         R_values.push($(this).val());
         changeColorSelect($(this).attr("id"));

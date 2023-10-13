@@ -1,4 +1,4 @@
-package servlets;
+package data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -65,7 +65,7 @@ public class CollisionData implements Serializable {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
