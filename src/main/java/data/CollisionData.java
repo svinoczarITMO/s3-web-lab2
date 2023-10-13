@@ -1,7 +1,6 @@
 package data;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class CollisionData implements Serializable {
     private boolean collision;
@@ -9,7 +8,7 @@ public class CollisionData implements Serializable {
     private float y;
     private float R;
     private String time;
-    private double executionTime;
+    private String executionTime;
 
     public CollisionData() {
         this.collision = false;
@@ -17,10 +16,10 @@ public class CollisionData implements Serializable {
         this.y = 0;
         this.R = 0;
         this.time = "1970.01.01 12:00:00";
-        this.executionTime = 0;
+        this.executionTime = "0";
     }
 
-    public CollisionData(boolean collision, float x, float y, float R, String time, double executionTime) {
+    public CollisionData(boolean collision, float x, float y, float R, String time, String executionTime) {
         this.collision = collision;
         this.x = x;
         this.y = y;
@@ -69,11 +68,11 @@ public class CollisionData implements Serializable {
         this.time = time;
     }
 
-    public double getExecutionTime() {
+    public String getExecutionTime() {
         return executionTime;
     }
 
-    public void setExecutionTime(double executionTime) {
+    public void setExecutionTime(String executionTime) {
         this.executionTime = executionTime;
     }
 }

@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -29,15 +30,16 @@ public class AreaCheckServlet extends HttpServlet {
             float x = Float.parseFloat(request.getParameter("x"));
             float y = Float.parseFloat(request.getParameter("y"));
             float R = Float.parseFloat(request.getParameter("R"));
-            double start = System.nanoTime();
-            double executionTime = Math.round(((System.nanoTime() - start) * 0.001) * 100.0) / 100.0;
+            double start = System.currentTimeMillis();
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+            DecimalFormat decimalFormat = new DecimalFormat("0.0000");
             String time = now.format(formatter);
-            // final HttpSession currentSession = request.getSession();
 
             if (validate(x, y, R)) {
                 boolean collision = checkHit(x, y, R);
+                double execTime = (System.currentTimeMillis() - start) / 1000.0;
+                String executionTime = decimalFormat.format(execTime);
                 CollisionData data = new CollisionData(collision, x, y, R, time, executionTime);
                 String jsonData = this.gson.toJson(data);
 
@@ -45,18 +47,7 @@ public class AreaCheckServlet extends HttpServlet {
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 out.println(jsonData);
-                // Map<String, Object> resMap = new HashMap<String, Object>();
-                // PrintWriter out = response.getWriter();
-                // resMap.put("collision", checkHit(x, y, R));
-                // resMap.put("x", x);
-                // resMap.put("y", y);
-                // resMap.put("R", R);
-                // resMap.put("time", LocalDateTime.now());
-                // resMap.put("execTime", execTime);
-                // response.setContentType("application/json");
-                // response.setCharacterEncoding("UTF-8");
-                // out.print(jsonData);
-                // out.flush();
+                out.flush();
             }
         } catch (Exception e) {
             getServletContext().setAttribute("error", e.getMessage());
