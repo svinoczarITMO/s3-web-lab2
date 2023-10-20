@@ -122,6 +122,54 @@ function showError(msg, delay) {
     }, delay);
 }
 
+function checkClickArea(x, y) {
+    // var result = '';
+    // if ((x >= 40 && x <= 345) && (y >= 45 && y<= 350)){
+    //     const buttonsR = $('.R_val');
+    //     let isActiveButtonR = false;
+    //     buttonsR.forEach(button => {
+    //         if (button.classList.contains('green')) {
+    //             isActiveButtonR = true;
+    //         }
+    //     });
+    //     if (isActiveButtonR){
+    //         let valueR;
+    //         buttonsR.forEach(button => {
+    //             if (button.classList.contains('green')) {
+    //                 valueR = button.dataset.value;
+    //             }
+    //         });
+    //         let toSendX = ((x - 195) / 150 * valueR).toFixed(5);
+    //         let toSendY = ((200 - y) / 155 * valueR).toFixed(5);
+    //         if (toSendX >= -2 && toSendX <= 2 && toSendY >= -5 && toSendY <= 3 ){
+    //             $.ajax({
+    //                 type: "POST",
+    //                 url: "/s3-web-lab2/controller",
+    //                 async: false,
+    //                 data: { "x": toSendX, "y": toSendY, "R": valueR },
+    //                 success: function (data) {
+    //                     window.location.replace('./result.jsp');
+    //                 },
+    //                 error: function (xhr, textStatus, err) {
+    //                     console.log("readyState: " + xhr.readyState + "\n"+
+    //                         "responseText: " + xhr.responseText + "\n"+
+    //                         "status: " + xhr.status + "\n"+
+    //                         "text status: " + textStatus + "\n" +
+    //                         "error: " + err);
+    //                 }
+    //             });
+    //         }else{
+    //             result = 'Выход значений за пределы допустимого';
+    //         }
+    //     }else{
+    //         result = 'Не активирован R';
+    //     }
+    // }else{
+    //     result = 'Вы не попали в область';
+    // }
+}
+
+// НАЧАЛО РАБОТЫ JS СРКИПТА
 $(document).ready(function () {
     if (sessionStorage.length > 0) {
         console.log(sessionStorage[0]);
@@ -186,7 +234,7 @@ $(document).ready(function () {
         console.log(x, y, R);
 
         if (validate(x, y, R)) {
-            areaCheckGetRequest({ x: x, y: y, R: R }, false);
+            areaCheckGetRequest({ x: x, y: y, R: R }, true);
         } else {
             showError(
                 "Проверьте корректность введенных значений!\nx ∈ [-4; 4]\ny ∈ [-3; 5]\nR ∈ [1; 5]",
@@ -194,4 +242,18 @@ $(document).ready(function () {
             );
         }
     });
+
+    // let errorShow = document.querySelector('.checkInput');
+    let svg = $('.coord img');
+    svg.click(function (event) {
+        let x = event.clientX;
+        let y = event.clientY;
+        let point = svg[0].createSVGPoint();
+        point.x = x;
+        point.y = y;
+        let transformedPoint = point.matrixTransform(svg[0].getScreenCTM().inverse());
+        // checkClickArea(transformedPoint.x, transformedPoint.y);
+        console.log(transformedPoint)
+    });
+
 });

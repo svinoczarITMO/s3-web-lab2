@@ -17,11 +17,14 @@
 </head>
 
 <body>
+    <div>
     <header>
         Babushkin Alexander Mikhailovich P3221 var: 2145
         <button id="clear-table" style="position: fixed; top: 5px; right: 10px; height: 40px;" >clear</button>
     </header>
+    </div>
 
+    <div class="main">
     <table width="100%">
         <tr>
             <th with="100%">
@@ -66,7 +69,56 @@
         <tr>
             <th width=100%>
                 <div id="error_div"></div>
-                <img src="img/coord.png" alt="BRUH" width="20%" height="20%">
+                <div class="window">
+                    <svg width="400" height="400">
+                        <%-- PALOCHKIN --%>
+                        <line x1="0" y1="200" x2="400" y2="200" stroke="black" stroke-width="2"/>
+                        <line x1="200" y1="0" x2="200" y2="400" stroke="black" stroke-width="2"/>
+                        <%-- STRELOCHKI --%>
+                        <polygon points="400,200 390,195 390,205" fill="black"/>
+                        <polygon points="200,0 195,10 205,10" fill="black"/>
+
+                        <%-- OTMETOCHKI X --%>
+                        <line x1="50" y1="195" x2="50" y2="205" stroke="black" stroke-width="2"/>
+                        <line x1="125" y1="195" x2="125" y2="205" stroke="black" stroke-width="2"/>
+                        <line x1="275" y1="195" x2="275" y2="205" stroke="black" stroke-width="2"/>
+                        <line x1="350" y1="195" x2="350" y2="205" stroke="black" stroke-width="2"/>
+                        <line x1="450" y1="195" x2="450" y2="205" stroke="black" stroke-width="2"/>
+
+                        <text x="45" y="220" font-size="13">-R</text>
+                        <text x="110" y="220" font-size="13">-R/2</text>
+                        <text x="265" y="220" font-size="13">R/2</text>
+                        <text x="345" y="220" font-size="13">R</text>
+
+                        <%-- OTMETOCHKI Y --%>
+                        <line x1="195" y1="50" x2="205" y2="50" stroke="black" stroke-width="2"/>
+                        <line x1="195" y1="125" x2="205" y2="125" stroke="black" stroke-width="2"/>
+                        <line x1="195" y1="275" x2="205" y2="275" stroke="black" stroke-width="2"/>
+                        <line x1="195" y1="350" x2="205" y2="350" stroke="black" stroke-width="2"/>
+                        <line x1="195" y1="450" x2="205" y2="450" stroke="black" stroke-width="2"/>
+
+                        <text x="180" y="55" font-size="13">R</text>
+                        <text x="173" y="129" font-size="13">R/2</text>
+                        <text x="169" y="279" font-size="13">-R/2</text>
+                        <text x="180" y="355" font-size="13">-R</text>
+
+                        <%-- a quarter of circle --%>
+                        <path d="M 200 350 A 150 150 0 0 1 50 200 L 200 200 Z" fill="rgba(150, 228, 255, 0.5)" stroke="black"
+                                stroke-width="1"/>
+
+                        <%-- triangle --%>
+                        <polygon points="50,200 200,200 200,50" fill="rgba(150, 228, 255, 0.5)" stroke="black"
+                                stroke-width="1"></polygon>
+                        <%-- pryamougol'nik --%>
+                        <polygon points="200,200 350,200 350,250 200,250" fill="rgba(150, 228, 255, 0.5)" stroke="black"
+                                stroke-width="1"></polygon>
+                    </svg>
+                </div>
+                <%-- <div class="coord">
+                    <img src="img/coord.png" alt="BRUH" width="20%" height="20%"> --%>
+                    <%-- <svg xmlns="img/coord.svg" width="160px" height="160px" style="position: absolute; top: 213px; left: 500px;"> penis </svg> --%>
+                    <%-- <svg xmlns="img/coord.svg"> penis </svg> --%>
+                <%-- </div> --%>
             </th>
         </tr>
         <tr>
@@ -82,7 +134,7 @@
             </th>
         </tr>
     </table>
-
+    </div>
 </body>
 
 </html>
