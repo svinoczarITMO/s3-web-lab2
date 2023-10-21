@@ -2,13 +2,13 @@ package data;
 
 import java.io.Serializable;
 
-public class CollisionData implements Serializable {
-    private boolean collision;
-    private float x;
-    private float y;
-    private float R;
-    private String time;
-    private String executionTime;
+public final class CollisionData implements Serializable {
+    private final boolean collision;
+    private final float x;
+    private final float y;
+    private final float R;
+    private final String time;
+    private final String executionTime;
 
     public CollisionData() {
         this.collision = false;
@@ -32,47 +32,24 @@ public class CollisionData implements Serializable {
         return collision;
     }
 
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
-
     public float getX() {
         return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
     }
 
     public float getY() {
         return y;
     }
 
-    public void setY(float y) {
-        this.y = y;
-    }
 
     public float getR() {
         return R;
-    }
-
-    public void setR(float r) {
-        R = r;
     }
 
     public String getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public String getExecutionTime() {
         return executionTime;
-    }
-
-    public void setExecutionTime(String executionTime) {
-        this.executionTime = executionTime;
     }
 }

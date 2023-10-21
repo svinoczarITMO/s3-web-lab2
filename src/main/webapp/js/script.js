@@ -7,7 +7,6 @@ let R_button;
 function areaCheckGetRequest(data, redirectToResult) {
     $.ajax({
         type: "GET",
-        headers: {},
         url: "/s3-web-lab2/controller",
         async: false,
         data: data,
@@ -16,19 +15,12 @@ function areaCheckGetRequest(data, redirectToResult) {
                 `response.x: ${responseData.x}, response.y: ${responseData.y}, response.R: ${responseData.R},\n` +
                     `response.collision: ${responseData.collision}, response.execTime: ${responseData.executionTime}, response.time: ${responseData.time}`
             );
-            sessionStorage.setItem(
-                sessionStorage.length + 1,
-                JSON.stringify({
-                    x: responseData.x,
-                    y: responseData.y,
-                    R: responseData.R,
-                    collision: responseData.collision,
-                    time: responseData.time,
-                    execTime: responseData.executionTime,
-                })
-            );
-            const content = `<tr>
-                     <td>${responseData.x}</td>
+            if (redirectToResult) {
+                window.location.href = "./result.jsp";
+            } else {
+                console.log("successful request");
+                const content = `<tr>
+                    <td>${responseData.x}</td>
                      <td>${responseData.y}</td>
                      <td>${responseData.R}</td>
                      <td>${responseData.collision}</td>
@@ -37,10 +29,6 @@ function areaCheckGetRequest(data, redirectToResult) {
                      </tr>`;
             result_table.append(content);
             result_table_element_id += 1;
-            if (redirectToResult) {
-                window.location.href = "./result.jsp";
-            } else {
-                console.log("successful request");
             }
         },
         error: function (xhr, textStatus, error) {
@@ -60,6 +48,31 @@ function areaCheckGetRequest(data, redirectToResult) {
                     "error: " +
                     error
             );
+        },
+    });
+}
+
+function loadHistory() {
+    $.ajax({
+        url: "/s3-web-lab2/loadHistory",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            // $("#result-div").empty();
+            $.each(data, function (index, responseData) {
+                const content = `<tr>
+                     <td>${responseData.x}</td>
+                     <td>${responseData.y}</td>
+                     <td>${responseData.R}</td>
+                     <td>${responseData.collision}</td>
+                     <td>${responseData.executionTime}s</td>
+                     <td>${responseData.time}</td>
+                     </tr>`;
+                $("#result-table").append(content);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Error: " + error);
         },
     });
 }
@@ -116,38 +129,39 @@ function showError(msg, delay) {
 }
 
 $(document).ready(function () {
-    if (sessionStorage.length > 0) {
-        console.log(sessionStorage[0]);
-        Object.keys(sessionStorage).forEach((key) => {
-            try {
-                const result = JSON.parse(sessionStorage.getItem(key));
-                // if (result.x) {
-                    const content = `<tr>
-                    <td>${result.x}</td>
-                    <td>${result.y}</td>
-                    <td>${result.R}</td>
-                    <td>${result.collision}</td>
-                    <td>${result.execTime}</td>
-                    <td>${result.time}</td>
-                    </tr>`;
-                    result_table.append(content);
-                // } else {
-                    // console.log("Произошло что-то странное при загрузке страницы")
-                // }
-            } catch (error) {
-                console.error(`Ошибка разбора JSON для ключа ${key}`);
-            }
-        });
-    } else {
-        const content = `<th width="16.6%">X</th>
-                        <th width="16.6%">Y</th>
-                        <th width="16.6%">R</th>
-                        <th width="16.6%">res</th>
-                        <th width="16.6%">execution time</th>
-                        <th width="16.6%">time</th>`;
-        result_table.html(content);
-        result_table_element_id += 1;
-    }
+    loadHistory();
+    // if (sessionStorage.length > 0) {
+    //     console.log(sessionStorage[0]);
+    //     Object.keys(sessionStorage).forEach((key) => {
+    //         try {
+    //             const result = JSON.parse(sessionStorage.getItem(key));
+    //             // if (result.x) {
+    //                 const content = `<tr>
+    //                 <td>${result.x}</td>
+    //                 <td>${result.y}</td>
+    //                 <td>${result.R}</td>
+    //                 <td>${result.collision}</td>
+    //                 <td>${result.execTime}</td>
+    //                 <td>${result.time}</td>
+    //                 </tr>`;
+    //                 result_table.append(content);
+    //             // } else {
+    //                 // console.log("Произошло что-то странное при загрузке страницы")
+    //             // }
+    //         } catch (error) {
+    //             console.error(`Ошибка разбора JSON для ключа ${key}`);
+    //         }
+    //     });
+    // } else {
+    //     const content = `<th width="16.6%">X</th>
+    //                     <th width="16.6%">Y</th>
+    //                     <th width="16.6%">R</th>
+    //                     <th width="16.6%">res</th>
+    //                     <th width="16.6%">execution time</th>
+    //                     <th width="16.6%">time</th>`;
+    //     result_table.html(content);
+    //     result_table_element_id += 1;
+    // }
 
     $("#clear-table").click(function () {
         sessionStorage.clear();
@@ -218,10 +232,7 @@ $(document).ready(function () {
             console.log(`y: ${y}, normY: ${normalizedY}`);
             console.log(clicked_points[clicked_points.length - 1]);
 
-            areaCheckGetRequest(
-                { x: normalizedX, y: normalizedY, R: R },
-                false
-            );
+            areaCheckGetRequest({ x: normalizedX, y: normalizedY, R: R }, true);
         } else {
             showError("Укажите параметр R!", 5000);
         }

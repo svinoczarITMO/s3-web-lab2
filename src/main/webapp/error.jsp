@@ -22,7 +22,7 @@
         <h1>
         Error: ${error}
         </h1>
-        <button class="return-buttons" onclick="redirectToMain()">Return</button>
+            <button onClick="window.location.replace('./index.jsp');" type="reset">←</button>
         </div>
     </body>
 </html>

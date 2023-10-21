@@ -1,14 +1,11 @@
 package servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,14 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import data.CollisionData;
 
 @WebServlet("/checkArea")
 public class AreaCheckServlet extends HttpServlet {
-    private Gson gson = new Gson();
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
             float x = Float.parseFloat(request.getParameter("x"));
@@ -41,13 +34,14 @@ public class AreaCheckServlet extends HttpServlet {
                 double execTime = (System.currentTimeMillis() - start) / 1000.0;
                 String executionTime = decimalFormat.format(execTime);
                 CollisionData data = new CollisionData(collision, x, y, R, time, executionTime);
-                String jsonData = this.gson.toJson(data);
 
-                PrintWriter out = response.getWriter();
-                response.setContentType("application/json");
-                response.setCharacterEncoding("UTF-8");
-                out.println(jsonData);
-                out.flush();
+                HttpSession session = request.getSession(true);
+                List<CollisionData> sessionList = (List<CollisionData>) session.getAttribute("sessionList");
+                if (sessionList == null) {
+                    sessionList = new ArrayList<>();
+                    session.setAttribute("sessionList", sessionList);
+                }
+                sessionList.add(data);
             }
         } catch (Exception e) {
             getServletContext().setAttribute("error", e.getMessage());
@@ -70,7 +64,7 @@ public class AreaCheckServlet extends HttpServlet {
 
     public boolean checkHit(float x, float y, float R) {
         // Triangle 2nd quarter.
-        if (Math.sqrt(Math.abs(x) + Math.abs(y)) <= R && x < 0 && y > 0) { // FIXME rewrite if
+        if (Math.sqrt(Math.abs(x) + Math.abs(y)) <= R && x < 0 && y > 0) { // rewrite if
             return true;
         }
         // Circle 3rd quarter.
@@ -79,7 +73,7 @@ public class AreaCheckServlet extends HttpServlet {
             return true;
         }
         // Square 4th quarter.
-        if (x > 0 && y < 0 && x < R && y > -0.5*R) {
+        if (x > 0 && y < 0 && x < R && y > -0.5 * R) {
             return true;
         }
         return false;
