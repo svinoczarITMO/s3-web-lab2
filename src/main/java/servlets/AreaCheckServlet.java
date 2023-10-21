@@ -70,7 +70,7 @@ public class AreaCheckServlet extends HttpServlet {
 
     public boolean checkHit(float x, float y, float R) {
         // Triangle 2nd quarter.
-        if (Math.abs(x) + Math.abs(y) <= R) { // FIXME rewrite if
+        if (Math.sqrt(Math.abs(x) + Math.abs(y)) <= R && x < 0 && y > 0) { // FIXME rewrite if
             return true;
         }
         // Circle 3rd quarter.
@@ -79,7 +79,7 @@ public class AreaCheckServlet extends HttpServlet {
             return true;
         }
         // Square 4th quarter.
-        if (x < R && 0 < x || y < 0 && -0.5 * R < y) {
+        if (x > 0 && y < 0 && x < R && y > -0.5*R) {
             return true;
         }
         return false;

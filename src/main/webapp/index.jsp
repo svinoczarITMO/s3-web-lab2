@@ -7,7 +7,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>2st web lab</title>
+    <title>2nd web lab</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/style.css">
@@ -110,7 +110,7 @@
                         <polygon points="50,200 200,200 200,50" fill="rgba(150, 228, 255, 0.5)" stroke="black"
                                 stroke-width="1"></polygon>
                         <%-- pryamougol'nik --%>
-                        <polygon points="200,200 350,200 350,250 200,250" fill="rgba(150, 228, 255, 0.5)" stroke="black"
+                        <polygon points="200,200 350,200 350,275 200,275" fill="rgba(150, 228, 255, 0.5)" stroke="black"
                                 stroke-width="1"></polygon>
                     </svg>
                 </div>
