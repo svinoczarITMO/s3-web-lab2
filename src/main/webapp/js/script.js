@@ -38,7 +38,7 @@ function areaCheckGetRequest(data, redirectToResult) {
             result_table.append(content);
             result_table_element_id += 1;
             if (redirectToResult) {
-                window.location.replace("./result.jsp");
+                window.location.href = "./result.jsp";
             } else {
                 console.log("successful request");
             }

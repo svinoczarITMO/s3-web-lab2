@@ -1,5 +1,5 @@
 function redirectToMain() {
-    window.location.replace("./index.jsp");
+    window.location.href = "./index.jsp";
 }
 
 $(document).ready(function () {
